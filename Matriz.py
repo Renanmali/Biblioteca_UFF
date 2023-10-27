@@ -22,7 +22,7 @@ def jaccard(list1, list2):
 
 
 # Abrindo o csv e enumerando quais livros cada usuário leu 
-with open('Biblioteca_base1.csv', 'r') as arquivo:
+with open('Biblioteca_base.csv', 'r') as arquivo:
     reader = csv.reader(arquivo)
     for i, linha in enumerate(arquivo):
         if i==0: continue
@@ -35,36 +35,28 @@ with open('Biblioteca_base1.csv', 'r') as arquivo:
         if userid not in users:
             users[userid] = dict()
         users[userid][bookid] = rating
-    # print(len(users))
-    # print(users) 
+    
+# Enumerando todos os usuários e fazendo a similaridade de Jaccard para cada um deles 
     for user in enumerate(users):
         a = user
         list3.append(a) 
         cont += 1
-    # print(list3)
     for i in users:
-        aux = i + 1
+        aux = 0
         position = 0
         similarity[i] = dict()
         for j in users[i]:
             list1.append(j)
-        
-        while(position < cont):
-            
-            # print(list3[position][0])
-            # print(list3)
-            
-            for j in users[list3[position][1]]:
-               
-            
-                list2.append(j)
-                print(list2)
-                result = jaccard(list1, list2)  
-                similarity[i][list3[position][1]] = result
-                position += 1
+        while(aux < cont):
+            if(aux != i):
+                for j in users[list3[aux][1]]:
+                    list2.append(j)
+            result = jaccard(list1, list2)  
+            similarity[i][list3[aux][1]] = result
+            aux += 1
+            list2 = []
+        list1 = []
 
-            list1 = []
-
-print(similarity)
+print(similarity[95450])
 
     
